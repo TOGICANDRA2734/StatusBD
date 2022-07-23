@@ -103,7 +103,7 @@
                                 <td class="px-4 py-3 text-sm group-hover:bg-gray-400 group-hover:text-white">{{$dt->pic}}</td>
                                 <td class="px-4 py-3 text-sm group-hover:bg-gray-400 group-hover:text-white">{{$dt->namasite}}</td>
                                 <td class="px-4 py-3 text-sm group-hover:bg-gray-400 group-hover:text-white text-center">
-                                    <a href="{{route('bd-harian.show', $dt->id)}}" class="tbDetail px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-stone-800 border border-transparent rounded-md active:bg-stone-800 hover:bg-stone-900 focus:outline-none focus:shadow-outline-purple">
+                                    <a href="{{route('bd-harian-detail.index', $dt->id)}}" class="tbDetail px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-stone-800 border border-transparent rounded-md active:bg-stone-800 hover:bg-stone-900 focus:outline-none focus:shadow-outline-purple">
                                         ...
                                     </a>
                                 </td>
@@ -117,7 +117,7 @@
             </div>
         </div>
         
-        <a href="{{route('bd-harian.create')}}" class="bg-stone-500 hover:bg-stone-800 transition-all duration-150 text-white absolute right-10 bottom-70 px-4 py-3 rounded-full shadow-md">
+        <a href="{{route('bd-harian.create')}}" class="bg-stone-500 hover:bg-stone-800 transition-all duration-150 text-white absolute right-10 bottom-20 px-4 py-3 rounded-full shadow-md">
             +
         </a>
 </main>

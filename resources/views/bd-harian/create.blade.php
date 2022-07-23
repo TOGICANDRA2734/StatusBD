@@ -10,13 +10,13 @@
         <form
             action="{{route('bd-harian.store')}}"
             method="POST"
-            enctype="multipart/form-data"
+            id="storeUtama"
             class="px-4 py-3 mb-8 grid grid-cols-2 gap-5 bg-white rounded-lg shadow-md dark:bg-gray-800"
         >
             @csrf
             <label class="block mt-4 text-sm">
                 <span class="font-semibold text-gray-700 dark:text-gray-400">Nomor Unit</span>
-                <select class="p-2 border border-gray-100 rounded-md w-full" name="nom_unit" id="nom_unit">
+                <select class="block shadow-sm border p-2 rounded-md w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-multiselect focus:border-stone-400 focus:outline-none focus:shadow-outline-stone dark:focus:shadow-outline-gray" name="nom_unit" id="nom_unit">
                     @foreach($nom_unit as $nu)
                         <option value="{{$nu->Nom_unit}}">{{$nu->Nom_unit}}</option>
                     @endforeach
@@ -50,11 +50,40 @@
                     Status BD
                 </span>
                 <select
-                    name="status_bd"
+                    name="kode_bd"
                     class="block shadow-sm border p-2 rounded-md w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-multiselect focus:border-stone-400 focus:outline-none focus:shadow-outline-stone dark:focus:shadow-outline-gray"
                 >
                     @foreach($kode_bd as $data)
                         <option value="{{$data->kode_bd}}">{{$data->kode_bd}}</option>
+                    @endforeach
+                </select>
+            </label>
+
+            <label class="block mt-4 text-sm">
+                <span class="font-semibold text-gray-700 dark:text-gray-400">
+                    HM
+                </span>
+                <input class="block shadow-sm border p-2 rounded-md w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-multiselect focus:border-stone-400 focus:outline-none focus:shadow-outline-stone dark:focus:shadow-outline-gray" type="text" name="hm" id="hm">
+            </label>
+
+            <label class="block mt-4 text-sm">
+                <span class="font-semibold text-gray-700 dark:text-gray-400">
+                    PIC
+                </span>
+                <input class="block shadow-sm border p-2 rounded-md w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-multiselect focus:border-stone-400 focus:outline-none focus:shadow-outline-stone dark:focus:shadow-outline-gray" type="text" name="pic" id="pic">
+            </label>
+
+            <label class="block mt-4 text-sm">
+                <span class="font-semibold text-gray-700 dark:text-gray-400">
+                    Site
+                </span>
+
+                <select
+                    name="site"
+                    class="block shadow-sm border p-2 rounded-md w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-multiselect focus:border-stone-400 focus:outline-none focus:shadow-outline-stone dark:focus:shadow-outline-gray"
+                >
+                    @foreach($site as $st)
+                        <option value="{{$st->kodesite}}">{{$st->namasite}} - {{$st->lokasi}}</option>
                     @endforeach
                 </select>
             </label>
@@ -66,15 +95,24 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <!-- Dokumen -->
             <form
-                action="{{route('bd-harian.store')}}"
+                action="{{route('bd-harian-dok.store')}}"
                 method="POST"
-                enctype="multipart/form-data"
+                id="storeDok"
                 class="px-4 py-3 mb-8 grid grid-cols-2 gap-5 bg-white rounded-lg shadow-md dark:bg-gray-800"
             >
                 @csrf
                 <label class="block mt-4 text-sm">
+                    <span class="font-semibold text-gray-700 dark:text-gray-400">Tiket</span>
+                    <select class="block shadow-sm border p-2 rounded-md w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-multiselect focus:border-stone-400 focus:outline-none focus:shadow-outline-stone dark:focus:shadow-outline-gray" name="id_tiket" id="id_tiket">
+                        @foreach($dok_tiket as $it)
+                            <option value="{{$it->id_tiket}}">{{$it->id_tiket}}</option>
+                        @endforeach
+                    </select>
+                </label>
+
+                <label class="block mt-4 text-sm">
                     <span class="font-semibold text-gray-700 dark:text-gray-400">Dokumen</span>
-                    <select class="p-2 border border-gray-100 rounded-md w-full" name="dok_type" id="dok_type">
+                    <select class="block shadow-sm border p-2 rounded-md w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-multiselect focus:border-stone-400 focus:outline-none focus:shadow-outline-stone dark:focus:shadow-outline-gray" name="dok_type" id="dok_type">
                         @foreach($dok_type as $nu)
                             <option value="{{$nu->dok_type}}">{{$nu->dok_type}}</option>
                         @endforeach
@@ -115,15 +153,23 @@
 
             <!-- Uraian -->
             <form
-                action="{{route('bd-harian.store')}}"
+                action="{{route('bd-harian-desc.store')}}"
                 method="POST"
-                enctype="multipart/form-data"
+                id="storeDesc"
                 class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800"
             >
                 @csrf
                 <label class="block mt-4 text-sm">
+                    <span class="font-semibold text-gray-700 dark:text-gray-400">Tiket</span>
+                    <select class="block shadow-sm border p-2 rounded-md w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-multiselect focus:border-stone-400 focus:outline-none focus:shadow-outline-stone dark:focus:shadow-outline-gray" name="id_tiket" id="id_tiket">
+                        @foreach($dok_tiket as $it)
+                            <option value="{{$it->id_tiket}}">{{$it->id_tiket}}</option>
+                        @endforeach
+                    </select>
+                </label>
+                <label class="block mt-4 text-sm">
                     <span class="font-semibold text-gray-700 dark:text-gray-400">Uraian</span>
-                    <textarea name="uraian" id="uraian" cols="30" rows="10" class="block shadow-sm border p-2 rounded-md w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-multiselect focus:border-stone-400 focus:outline-none focus:shadow-outline-stone dark:focus:shadow-outline-gray"></textarea>
+                    <textarea name="uraian_bd" id="uraian_bd" cols="30" rows="10" class="block shadow-sm border p-2 rounded-md w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-multiselect focus:border-stone-400 focus:outline-none focus:shadow-outline-stone dark:focus:shadow-outline-gray"></textarea>
                 </label>
 
                 <button type="submit" class="px-5 py-3 mt-4 col-span-2 font-medium leading-5 text-white transition-colors duration-150 bg-stone-700 border border-transparent rounded-lg active:bg-stone-600 hover:bg-stone-900 focus:outline-none focus:shadow-outline-stone w-full">Submit</button>
@@ -131,4 +177,59 @@
         </div>
     </div>    
 </main>
+
+<script>
+    var urlUtama = "/bd-harian";
+    $('#storeUtama').submit(function(event){
+        event.preventDefault();
+        $.ajax({
+            url: urlUtama,
+            type: 'POST',
+            data: $('#storeUtama').serialize(),
+            dataType: 'json',
+            success: function(response){
+                swal({
+                    title: "Thankyou!",
+                    text: "Our excecutives will contact you soon.",
+                    type: "success",
+                });
+            },
+            error: function(response){
+            }
+        })
+    });
+
+    var urlDok = "/bd-harian-dok";
+    $('#storeDok').submit(function(event){
+        event.preventDefault();
+        $.ajax({
+            url: urlDok,
+            type: 'POST',
+            data: $('#storeDok').serialize(),
+            dataType: 'json',
+            success: function(response){
+            },
+            error: function(response){
+            }
+        })
+    });
+
+    var urlDesc = "/bd-harian-desc";
+    $('#storeDesc').submit(function(event){
+        event.preventDefault();
+        $.ajax({
+            url: urlDesc,
+            type: 'POST',
+            data: $('#storeDesc').serialize(),
+            dataType: 'json',
+            success: function(response){
+            },
+            error: function(response){
+            }
+        })
+    });
+
+
+
+</script>
 @endsection
