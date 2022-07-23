@@ -178,6 +178,8 @@
     </div>    
 </main>
 
+
+<script src="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.2/js/toastr.min.js"></script>
 <script>
     var urlUtama = "/bd-harian";
     $('#storeUtama').submit(function(event){
@@ -186,13 +188,8 @@
             url: urlUtama,
             type: 'POST',
             data: $('#storeUtama').serialize(),
-            dataType: 'json',
             success: function(response){
-                swal({
-                    title: "Thankyou!",
-                    text: "Our excecutives will contact you soon.",
-                    type: "success",
-                });
+                toastr.success("Data Berhasil Diinput");
             },
             error: function(response){
             }
@@ -206,8 +203,9 @@
             url: urlDok,
             type: 'POST',
             data: $('#storeDok').serialize(),
-            dataType: 'json',
             success: function(response){
+                toastr.success("Data Berhasil Diinput");
+
             },
             error: function(response){
             }
@@ -221,8 +219,8 @@
             url: urlDesc,
             type: 'POST',
             data: $('#storeDesc').serialize(),
-            dataType: 'json',
             success: function(response){
+                toastr.success("Data Berhasil Diinput");
             },
             error: function(response){
             }

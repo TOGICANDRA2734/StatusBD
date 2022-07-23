@@ -28,6 +28,7 @@
     <script src="{{asset('js/charts-pie.js')}}" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
     <title>PT RCI | Status Breakdown</title>
 </head>
