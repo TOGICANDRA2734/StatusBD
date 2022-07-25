@@ -23,6 +23,7 @@ class BDHarianController extends Controller
         IFNULL(DATEDIFF(plant_status_bd.tgl_rfu, plant_status_bd.tgl_bd),0) as day,
         site.namasite"))
         ->join('site', 'plant_status_bd.kodesite', '=', 'site.kodesite')
+        ->orderBy('id')
         ->get();
 
         return view('bd-harian.index', compact('data'));
@@ -53,19 +54,31 @@ class BDHarianController extends Controller
      */
     public function detail($id)
     {
+        $data = DB::table('plant_status_bd')->select(DB::raw("
+        plant_status_bd.*, 
+        IFNULL(DATEDIFF(plant_status_bd.tgl_rfu, plant_status_bd.tgl_bd),0) as day,
+        site.namasite"))
+        ->join('site', 'plant_status_bd.kodesite', '=', 'site.kodesite')
+        ->where('plant_status_bd.id', '=', $id)
+        ->orderBy('id')
+        ->get();
+
+        $nom_unit = DB::table('plant_status_bd')->select("nom_unit")->where('id', '=', $id)->get();
+
         $dataDok = DB::table('plant_status_bd')
-        ->select('plant_status_bd.nom_unit', 'plant_status_bd_dok.dok_type', 'plant_status_bd_dok.dok_no', 'plant_status_bd_dok.dok_tgl', 'plant_status_bd_dok.uraian', 'plant_status_bd_dok.keterangan')
+        ->select('plant_status_bd.nom_unit', 'plant_status_bd_dok.dok_type', 'plant_status_bd_dok.dok_no', 'plant_status_bd_dok.dok_tgl', 'plant_status_bd_dok.uraian_bd', 'plant_status_bd_dok.uraian', 'plant_status_bd_dok.keterangan')
         ->join('plant_status_bd_dok', 'plant_status_bd.id', '=', 'plant_status_bd_dok.id_tiket')
         ->where('plant_status_bd.id', '=', $id)
         ->get();
 
-        $dataDesc = DB::table('plant_status_bd')
-        ->select('plant_status_bd.nom_unit', 'plant_status_bd_desc.uraian_bd')
-        ->join('plant_status_bd_desc', 'plant_status_bd.id', '=', 'plant_status_bd_desc.id_tiket')
-        ->where('plant_status_bd.id', '=', $id)
-        ->get();
-        return view('bd-harian.detail', compact('dataDok', 'dataDesc'));
+        if(count($dataDok) === 0){
+            $dataDesc = "Data Kosong";
+            $dataDok = "Data Kosong";
+        }
+
+        return view('bd-harian.detail-baru', compact('dataDok', 'nom_unit', 'data'));
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -164,6 +177,7 @@ class BDHarianController extends Controller
      */
     public function show($id)
     {
+
     }
 
     /**
@@ -174,7 +188,16 @@ class BDHarianController extends Controller
      */
     public function edit($id)
     {
-        //
+        // Data Utama
+        $data = Plant_bd::findOrFail($id);
+        $nom_unit = DB::table("plant_populasi")->select("Nom_unit")->get();
+        $kode_bd = DB::table("kode_bd")->select("kode_bd")->get();
+        $dok_type = DB::table("plant_status_bd_dok")->select(DB::raw("DISTINCT dok_type"))->get();
+        $dok_tiket = DB::table("plant_status_bd_dok")->select(DB::raw("DISTINCT id_tiket"))->get();
+        $site = DB::table('site')->select('kodesite', 'namasite', 'lokasi')->get();
+
+
+        return view('bd-harian.create', compact('nom_unit', 'kode_bd', 'dok_type', 'dok_tiket', 'site'));
     }
 
     /**

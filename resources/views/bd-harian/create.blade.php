@@ -227,7 +227,5 @@
         })
     });
 
-
-
 </script>
 @endsection
