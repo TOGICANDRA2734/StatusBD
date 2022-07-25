@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BDHarianController;
+use App\Http\Controllers\POController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,7 +18,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [BDHarianController::class, 'index']);
 
 Route::resource('bd-harian', BDHarianController::class);
-Route::get('bd-harian-detail-baru/{bd_harian}', [BDHarianController::class, 'detailBaru'])->name('bd-detail-baru.index');
+Route::put('bd-harian/delete/{bd_harian}', [BDHarianController::class, 'deleteData'])->name('bd-harian.delete');
 Route::get('bd-harian-detail/{bd_harian}', [BDHarianController::class, 'detail'])->name('bd-harian-detail.index');
 Route::post('bd-harian-dok', [BDHarianController::class, 'storeBdDok'])->name('bd-harian-dok.store');
 Route::post('bd-harian-desc', [BDHarianController::class, 'storeBdDesc'])->name('bd-harian-desc.store');
+
+// PO
+Route::resource('po-harian', POController::class);

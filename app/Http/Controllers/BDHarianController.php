@@ -20,7 +20,7 @@ class BDHarianController extends Controller
     {
         $data = DB::table('plant_status_bd')->select(DB::raw("
         plant_status_bd.*, 
-        IFNULL(DATEDIFF(plant_status_bd.tgl_rfu, plant_status_bd.tgl_bd),0) as day,
+        IFNULL(DATEDIFF(curdate(), plant_status_bd.tgl_bd),0) as day,
         site.namasite"))
         ->join('site', 'plant_status_bd.kodesite', '=', 'site.kodesite')
         ->orderBy('id')
@@ -56,7 +56,7 @@ class BDHarianController extends Controller
     {
         $data = DB::table('plant_status_bd')->select(DB::raw("
         plant_status_bd.*, 
-        IFNULL(DATEDIFF(plant_status_bd.tgl_rfu, plant_status_bd.tgl_bd),0) as day,
+        IFNULL(DATEDIFF(curdate(), plant_status_bd.tgl_bd),0) as day,
         site.namasite"))
         ->join('site', 'plant_status_bd.kodesite', '=', 'site.kodesite')
         ->where('plant_status_bd.id', '=', $id)
@@ -66,7 +66,7 @@ class BDHarianController extends Controller
         $nom_unit = DB::table('plant_status_bd')->select("nom_unit")->where('id', '=', $id)->get();
 
         $dataDok = DB::table('plant_status_bd')
-        ->select('plant_status_bd.nom_unit', 'plant_status_bd_dok.dok_type', 'plant_status_bd_dok.dok_no', 'plant_status_bd_dok.dok_tgl', 'plant_status_bd_dok.uraian_bd', 'plant_status_bd_dok.uraian', 'plant_status_bd_dok.keterangan')
+        ->select('plant_status_bd_dok.id', 'plant_status_bd.nom_unit', 'plant_status_bd_dok.dok_type', 'plant_status_bd_dok.dok_no', 'plant_status_bd_dok.dok_tgl', 'plant_status_bd_dok.uraian_bd', 'plant_status_bd_dok.uraian', 'plant_status_bd_dok.keterangan')
         ->join('plant_status_bd_dok', 'plant_status_bd.id', '=', 'plant_status_bd_dok.id_tiket')
         ->where('plant_status_bd.id', '=', $id)
         ->get();
@@ -76,7 +76,7 @@ class BDHarianController extends Controller
             $dataDok = "Data Kosong";
         }
 
-        return view('bd-harian.detail-baru', compact('dataDok', 'nom_unit', 'data'));
+        return view('bd-harian.detail', compact('dataDok', 'nom_unit', 'data'));
     }
 
 
@@ -197,7 +197,17 @@ class BDHarianController extends Controller
         $site = DB::table('site')->select('kodesite', 'namasite', 'lokasi')->get();
 
 
-        return view('bd-harian.create', compact('nom_unit', 'kode_bd', 'dok_type', 'dok_tiket', 'site'));
+        return view('bd-harian.edit', compact('nom_unit', 'kode_bd', 'dok_type', 'dok_tiket', 'site', 'data'));
+    }
+
+    public function editDetail($id)
+    {
+        // Data Utama
+        $data = Plant_bd::findOrFail($id);
+        $dok_type = DB::table("plant_status_bd_dok")->select(DB::raw("DISTINCT dok_type"))->get();
+        $dok_tiket = DB::table("plant_status_bd_dok")->select(DB::raw("DISTINCT id_tiket"))->get();
+
+        return view('bd-harian.edit-detail', compact('nom_unit', 'kode_bd', 'dok_type', 'dok_tiket', 'site', 'data'));
     }
 
     /**
@@ -209,7 +219,38 @@ class BDHarianController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'nom_unit' => 'required',
+            'tgl_bd' => 'required',
+            'tgl_rfu' => 'required',
+            'ket_tgl_rfu' => 'required',
+            'kode_bd' => 'required',
+            'pic' => 'required',
+            'hm' => 'required',
+            'site' => 'required',
+        ]);
+
+        $record = Plant_bd::findOrFail($id);
+
+        $record->update([
+            'nom_unit'          =>  $request->nom_unit,
+            'tgl_bd'            =>  $request->tgl_bd,
+            'tgl_rfu'           =>  $request->tgl_rfu,
+            'ket_tgl_rfu'       =>  $request->ket_tgl_rfu,
+            'kode_bd'           =>  $request->kode_bd,
+            'pic'               =>  $request->pic,
+            'hm'                =>  $request->hm,
+            'kodesite'          =>  $request->site,
+            'keterangan'        =>  "Testing",
+            'status_bd'         =>  $request->kode_bd[1],
+        ]);
+
+        if($record){
+            return redirect()->route('bd-harian.index')->with(['success' => 'Data Berhasil Diupdate!']);
+        }
+        else{
+            return redirect()->route('bd-harian.index')->with(['error' => 'Data Gagal Diupdate!']);
+        }
     }
 
     /**
