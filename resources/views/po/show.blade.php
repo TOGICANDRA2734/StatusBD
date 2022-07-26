@@ -8,10 +8,10 @@
                 Detail PO
             </h2>
             
-            <button class="bg-green-600 hover:bg-green-800 duration-150 ease-in-out text-white font-bold py-2 px-4 rounded inline-flex justify-between items-center">
+            <a href="{{route('po-harian.create')}}" class="bg-green-600 hover:bg-green-800 duration-150 ease-in-out text-white font-bold py-2 px-4 rounded inline-flex justify-between items-center">
                 <i class="fa-solid fa-circle-plus mr-3"></i>    
                 <span>Tambah Data</span>
-            </button>
+            </a>
         </div>
 
         <!-- Table -->

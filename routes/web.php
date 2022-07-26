@@ -26,3 +26,4 @@ Route::resource('bd-harian-dok', BDDokController::class);
 
 // PO
 Route::resource('po-harian', POController::class);
+Route::get('po-harian/create_data/{$id}', [POController::class, 'create_data'])->name('po-harian.create_data');
