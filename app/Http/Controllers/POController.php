@@ -46,7 +46,7 @@ class POController extends Controller
      */
     public function show($id)
     {
-        $data = PO::findOrFail($id)->get();
+        $data = PO::where('id_tiket_po', $id)->get();
 
         return view('po.show', compact('data'));
     }
