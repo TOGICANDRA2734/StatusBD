@@ -3,9 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Plant_bd;
-use App\Models\Plant_bd_desc;
-use App\Models\Plant_bd_dok;
-use App\Models\PlantStatusBD;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -70,6 +67,7 @@ class BDHarianController extends Controller
         ->select('plant_status_bd_dok.id', 'plant_status_bd.nom_unit', 'plant_status_bd_dok.dok_type', 'plant_status_bd_dok.dok_no', 'plant_status_bd_dok.dok_tgl', 'plant_status_bd_dok.uraian_bd', 'plant_status_bd_dok.uraian', 'plant_status_bd_dok.keterangan')
         ->join('plant_status_bd_dok', 'plant_status_bd.id', '=', 'plant_status_bd_dok.id_tiket')
         ->where('plant_status_bd.id', '=', $id)
+        ->where('plant_status_bd_dok.del', '=', 1)
         ->get();
 
         if(count($dataDok) === 0){
@@ -121,55 +119,6 @@ class BDHarianController extends Controller
         }
     }
 
-    public function storeBdDok(Request $request)
-    {
-        $request->validate([
-            'id_tiket' => 'required',
-            'dok_type' => 'required',
-            'dok_no' => 'required',
-            'dok_tgl' => 'required',
-            'uraian' => 'required',
-            'keterangan' => 'required',
-        ]);
-
-        $record = Plant_bd_dok::create([
-            'id_tiket'              =>  $request->id_tiket,
-            'dok_type'              =>  $request->dok_type,
-            'dok_no'                =>  $request->dok_no,
-            'dok_tgl'               =>  $request->dok_tgl,
-            'uraian'                =>  $request->uraian,
-            'keterangan'            =>  $request->keterangan,
-        ]);
-
-        if($record){
-            return redirect()->route('bd-harian.index');
-        }
-        else{
-            return redirect()->route('bd-harian.index');
-        }
-    }
-
-    public function storeBdDesc(Request $request)
-    {
-        $request->validate([
-            'id_tiket' => 'required',
-            'uraian_bd' => 'required',
-        ]);
-
-        $record = Plant_bd_desc::create([
-            'id_tiket'              =>  $request->id_tiket,
-            'uraian_bd'              =>  $request->uraian_bd,
-        ]);
-
-        if($record){
-            return redirect()->route('bd-harian.index');
-        }
-        else{
-            return redirect()->route('bd-harian.index');
-        }
-    }
-
-
     /**
      * Display the specified resource.
      *
@@ -201,15 +150,6 @@ class BDHarianController extends Controller
         return view('bd-harian.edit', compact('nom_unit', 'kode_bd', 'dok_type', 'dok_tiket', 'site', 'data'));
     }
 
-    public function editDetail($id)
-    {
-        // Data Utama
-        $data = Plant_bd::findOrFail($id);
-        $dok_type = DB::table("plant_status_bd_dok")->select(DB::raw("DISTINCT dok_type"))->get();
-        $dok_tiket = DB::table("plant_status_bd_dok")->select(DB::raw("DISTINCT id_tiket"))->get();
-
-        return view('bd-harian.edit-detail', compact('nom_unit', 'kode_bd', 'dok_type', 'dok_tiket', 'site', 'data'));
-    }
 
     /**
      * Update the specified resource in storage.

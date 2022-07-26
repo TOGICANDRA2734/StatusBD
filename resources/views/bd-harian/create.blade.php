@@ -92,7 +92,7 @@
             <button type="submit" class="px-5 py-3 mt-4 col-span-2 font-medium leading-5 text-white transition-colors duration-150 bg-stone-700 border border-transparent rounded-lg active:bg-stone-600 hover:bg-stone-900 focus:outline-none focus:shadow-outline-stone w-full">Submit</button>
         </form>
         
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div class="grid grid-cols-1 gap-3">
             <!-- Dokumen -->
             <form
                 action="{{route('bd-harian-dok.store')}}"
@@ -148,32 +148,16 @@
                     <input class="block shadow-sm border p-2 rounded-md w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-multiselect focus:border-stone-400 focus:outline-none focus:shadow-outline-stone dark:focus:shadow-outline-gray" type="text" name="keterangan" id="keterangan">
                 </label>
 
-                <button type="submit" class="px-5 py-3 mt-4 col-span-2 font-medium leading-5 text-white transition-colors duration-150 bg-stone-700 border border-transparent rounded-lg active:bg-stone-600 hover:bg-stone-900 focus:outline-none focus:shadow-outline-stone w-full">Submit</button>
-            </form>
-
-            <!-- Uraian -->
-            <form
-                action="{{route('bd-harian-desc.store')}}"
-                method="POST"
-                id="storeDesc"
-                class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800"
-            >
-                @csrf
                 <label class="block mt-4 text-sm">
-                    <span class="font-semibold text-gray-700 dark:text-gray-400">Tiket</span>
-                    <select class="block shadow-sm border p-2 rounded-md w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-multiselect focus:border-stone-400 focus:outline-none focus:shadow-outline-stone dark:focus:shadow-outline-gray" name="id_tiket" id="id_tiket">
-                        @foreach($dok_tiket as $it)
-                            <option value="{{$it->id_tiket}}">{{$it->id_tiket}}</option>
-                        @endforeach
-                    </select>
-                </label>
-                <label class="block mt-4 text-sm">
-                    <span class="font-semibold text-gray-700 dark:text-gray-400">Uraian</span>
-                    <textarea name="uraian_bd" id="uraian_bd" cols="30" rows="10" class="block shadow-sm border p-2 rounded-md w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-multiselect focus:border-stone-400 focus:outline-none focus:shadow-outline-stone dark:focus:shadow-outline-gray"></textarea>
+                    <span class="font-semibold text-gray-700 dark:text-gray-400">
+                        Uraian Breakdown
+                    </span>
+                    <input class="block shadow-sm border p-2 rounded-md w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-multiselect focus:border-stone-400 focus:outline-none focus:shadow-outline-stone dark:focus:shadow-outline-gray" type="text" name="uraian_bd" id="uraian_bd">
                 </label>
 
                 <button type="submit" class="px-5 py-3 mt-4 col-span-2 font-medium leading-5 text-white transition-colors duration-150 bg-stone-700 border border-transparent rounded-lg active:bg-stone-600 hover:bg-stone-900 focus:outline-none focus:shadow-outline-stone w-full">Submit</button>
             </form>
+
         </div>
     </div>    
 </main>
@@ -206,21 +190,6 @@
             success: function(response){
                 toastr.success("Data Berhasil Diinput");
 
-            },
-            error: function(response){
-            }
-        })
-    });
-
-    var urlDesc = "/bd-harian-desc";
-    $('#storeDesc').submit(function(event){
-        event.preventDefault();
-        $.ajax({
-            url: urlDesc,
-            type: 'POST',
-            data: $('#storeDesc').serialize(),
-            success: function(response){
-                toastr.success("Data Berhasil Diinput");
             },
             error: function(response){
             }

@@ -66,10 +66,10 @@
             <h3 class="font-bold mt-3 mb-1 text-xl">
                 Detail
             </h3>
-            <button class="bg-green-600 hover:bg-green-800 duration-150 ease-in-out text-white font-bold py-2 px-4 rounded inline-flex justify-between items-center">
+            <a href="{{route('bd-harian-dok.create')}}" class="bg-green-600 hover:bg-green-800 duration-150 ease-in-out text-white font-bold py-2 px-4 rounded inline-flex justify-between items-center">
                 <i class="fa-solid fa-circle-plus mr-3"></i>    
                 <span>Tambah Data</span>
-            </button>
+            </a>
         </div>
         <div class="w-full overflow-hidden rounded-lg shadow-xs mt-3 mb-5">
             <div class="w-full overflow-x-auto max-h-96 md:max-h-[38rem]">
@@ -111,7 +111,7 @@
                                                         @endif    
                                                     </td>
                                                 @else
-                                                    @if ($key == 'sn' or $key == 'engine_brand' or $key == 'id' or $key == 'namasite')
+                                                    @if ($key == 'uraian' or $key == 'keterangan' or $key == 'uraian_bd')
                                                         <td class="px-4 py-3 border group-hover:bg-gray-400 group-hover:text-white">
                                                             {{$d}} 
                                                         </td>
@@ -131,10 +131,10 @@
                                         <a href="{{route('po-harian.show', $dt->id)}}" class="tbDetail cursor-pointer mr-1 px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-stone-800 border border-transparent rounded-md active:bg-stone-800 hover:bg-stone-900 focus:outline-none focus:shadow-outline-purple">
                                             ...
                                         </a>
-                                        <a href="" class="tbDetail mr-1 px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-amber-400 border border-transparent rounded-md active:bg-amber-800 hover:bg-amber-900 focus:outline-none focus:shadow-outline-purple">
+                                        <a href="{{route('bd-harian-dok.edit', $dt->id)}}" class="tbDetail mr-1 px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-amber-400 border border-transparent rounded-md active:bg-amber-800 hover:bg-amber-900 focus:outline-none focus:shadow-outline-purple">
                                             <i class="fa-solid fa-pencil"></i>
                                         </a>
-                                        <a href="" class="tbDetail mr-1 px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-red-600 border border-transparent rounded-md active:bg-red-800 hover:bg-red-900 focus:outline-none focus:shadow-outline-purple">
+                                        <a onclick="deleteConfirmationDetail({{$dt->id}})" class="tbDetail mr-1 px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-red-600 border border-transparent rounded-md active:bg-red-800 hover:bg-red-900 focus:outline-none focus:shadow-outline-purple">
                                             <i class="fa-solid fa-trash"></i>
                                         </a>
                                     </td>
@@ -166,6 +166,48 @@
             if (e.value === true) {
                 let token = $('meta[name="csrf-token"]').attr('content');
                 let _url = `/bd-harian/delete/${id}`;
+
+                $.ajax({
+                    type: 'POST',
+                    url: _url,
+                    data: {_token: token},
+                    success: function (resp) {
+                        if (resp.success) {
+                            swal.fire("Data Berhasil dihapus!", resp.message, "success");
+                            location.replace(window.location.origin + "/");
+                        } else {
+                            swal.fire("Error!", 'Ada kesalahan dalam menghapus data Testing', "error");
+                        }
+                    },
+                    error: function (resp) {
+                        swal.fire("Error!", 'Ada kesalahan dalam menghapus data Not Testing', "error");
+                    }
+                });
+
+            } else {
+                e.dismiss;
+            }
+
+        }, function (dismiss) {
+            return false;
+        })
+    }
+
+    function deleteConfirmationDetail(id) {
+        swal.fire({
+            title: "Apakah anda yakin untuk menghapus data?",
+            icon: 'question',
+            text: "Data akan dihapus beserta Data Detail yang ada di dalamnya",
+            type: "warning",
+            showCancelButton: !0,
+            confirmButtonText: "Ya",
+            cancelButtonText: "Tidak",
+            reverseButtons: !0
+        }).then(function (e) {
+
+            if (e.value === true) {
+                let token = $('meta[name="csrf-token"]').attr('content');
+                let _url = `/bd-harian-dok/delete/${id}`;
 
                 $.ajax({
                     type: 'POST',

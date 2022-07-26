@@ -15,7 +15,9 @@ class Plant_bd_dok extends Model
         'dok_no',
         'dok_tgl',
         'uraian',
+        'uraian_bd',
         'keterangan',
+        'del',
     ];
     public $timestamps =false;
 }
