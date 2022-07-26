@@ -47,7 +47,7 @@
                                     <a href="{{route('bd-harian.edit', $dt->id)}}" class="tbDetail mr-1 px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-amber-400 border border-transparent rounded-md active:bg-amber-800 hover:bg-amber-900 focus:outline-none focus:shadow-outline-purple">
                                         <i class="fa-solid fa-pencil"></i>
                                     </a>
-                                    <a href="" class="tbDetail mr-1 px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-red-600 border border-transparent rounded-md active:bg-red-800 hover:bg-red-900 focus:outline-none focus:shadow-outline-purple">
+                                    <a onclick="deleteConfirmation({{$dt->id}})" class="tbDetail mr-1 px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-red-600 border border-transparent rounded-md active:bg-red-800 hover:bg-red-900 focus:outline-none focus:shadow-outline-purple">
                                         <i class="fa-solid fa-trash"></i>
                                     </a>
                                 </td>
@@ -62,9 +62,15 @@
         </div>
 
         <!-- Data Dok -->
-        <h3 class="font-bold mt-3 mb-1 text-xl">
-            Detail
-        </h3>
+        <div class="flex justify-between items-center">
+            <h3 class="font-bold mt-3 mb-1 text-xl">
+                Detail
+            </h3>
+            <button class="bg-green-600 hover:bg-green-800 duration-150 ease-in-out text-white font-bold py-2 px-4 rounded inline-flex justify-between items-center">
+                <i class="fa-solid fa-circle-plus mr-3"></i>    
+                <span>Tambah Data</span>
+            </button>
+        </div>
         <div class="w-full overflow-hidden rounded-lg shadow-xs mt-3 mb-5">
             <div class="w-full overflow-x-auto max-h-96 md:max-h-[38rem]">
                 <table class="w-full whitespace-no-wrap border">
@@ -143,6 +149,50 @@
             </div>
         </div>
 </main>
+
+<script>
+    function deleteConfirmation(id) {
+        swal.fire({
+            title: "Apakah anda yakin untuk menghapus data?",
+            icon: 'question',
+            text: "Data akan dihapus beserta Data Detail yang ada di dalamnya",
+            type: "warning",
+            showCancelButton: !0,
+            confirmButtonText: "Ya",
+            cancelButtonText: "Tidak",
+            reverseButtons: !0
+        }).then(function (e) {
+
+            if (e.value === true) {
+                let token = $('meta[name="csrf-token"]').attr('content');
+                let _url = `/bd-harian/delete/${id}`;
+
+                $.ajax({
+                    type: 'POST',
+                    url: _url,
+                    data: {_token: token},
+                    success: function (resp) {
+                        if (resp.success) {
+                            swal.fire("Data Berhasil dihapus!", resp.message, "success");
+                            location.replace(window.location.origin + "/");
+                        } else {
+                            swal.fire("Error!", 'Ada kesalahan dalam menghapus data', "error");
+                        }
+                    },
+                    error: function (resp) {
+                        swal.fire("Error!", 'Ada kesalahan dalam menghapus data.', "error");
+                    }
+                });
+
+            } else {
+                e.dismiss;
+            }
+
+        }, function (dismiss) {
+            return false;
+        })
+    }
+</script>
 
 <script>
     function changeColor(el) {

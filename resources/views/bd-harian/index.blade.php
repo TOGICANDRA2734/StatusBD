@@ -58,16 +58,21 @@
                 </template>
             </div>
         </form>
-
-        <form class="flex justify-end mt-5" action="#" method="GET">
-            <input name="nama" id="nama" type="text" placeholder="Cari data" class="p-2 rounded-md mr-3 w-full md:w-auto text-xs md:text-sm" autocomplete="off">
-            <button class="px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-stone-600 border border-transparent rounded-md active:bg-stone-600 hover:bg-stone-700 focus:outline-none focus:shadow-outline-purple">
-                Cari
-            </button>
-        </form>
-
+        
+        <div class="mt-5 flex justify-between items-center">
+            <a href="{{route('bd-harian.create')}}" class="bg-green-600 hover:bg-green-800 duration-150 ease-in-out text-white font-bold py-2 px-4 rounded inline-flex justify-between items-center">
+                <i class="fa-solid fa-circle-plus mr-3"></i>    
+                <span>Tambah Data</span>
+            </a>
+            <form class="" action="#" method="GET">
+                <input name="nama" id="nama" type="text" placeholder="Cari data" class="p-2 rounded-md mr-3 w-full md:w-auto text-xs md:text-sm" autocomplete="off">
+                <button class="px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-stone-600 border border-transparent rounded-md active:bg-stone-600 hover:bg-stone-700 focus:outline-none focus:shadow-outline-purple">
+                    Cari
+                </button>
+            </form>
+        </div>
         <!-- Content Table -->
-        <div class="w-full overflow-hidden rounded-lg shadow-xs mt-5 mb-5">
+        <div class="w-full overflow-hidden rounded-lg shadow-xs mt-2 mb-5">
             <div class="w-full overflow-x-auto max-h-96 md:max-h-[38rem]">
                 <table class="w-full whitespace-no-wrap border">
                     <thead class="bg-stone-800 sticky top-0">
@@ -116,10 +121,6 @@
                 
             </div>
         </div>
-        
-        <a href="{{route('bd-harian.create')}}" class="bg-stone-500 hover:bg-stone-800 transition-all duration-150 text-white absolute right-10 bottom-20 px-4 py-3 rounded-full shadow-md">
-            +
-        </a>
 </main>
 
 <script>

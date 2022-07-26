@@ -23,6 +23,7 @@ class BDHarianController extends Controller
         IFNULL(DATEDIFF(curdate(), plant_status_bd.tgl_bd),0) as day,
         site.namasite"))
         ->join('site', 'plant_status_bd.kodesite', '=', 'site.kodesite')
+        ->where('del', '=', 1)
         ->orderBy('id')
         ->get();
 
@@ -262,5 +263,31 @@ class BDHarianController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function deleteData($id)
+    {
+        $record = Plant_bd::findOrFail($id)->update([
+            'del' =>  0,
+        ]);
+
+        if($record){
+            return response()->json([
+                'success' => true,
+                'message' => 'Data berhasil Dihapus'
+            ]);
+        }
+        else{
+            return response()->json([
+                'success' => false,
+                'message' => 'Data tidak berhasil Dihapus'
+            ]);
+        }
     }
 }

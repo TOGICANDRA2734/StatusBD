@@ -3,9 +3,16 @@
 @section('content')
 <main class="h-full overflow-y-auto">
     <div class="container px-6 mx-auto grid">
-        <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
-            Detail PO
-        </h2>
+        <div class="my-3 flex items-center justify-between">
+            <h2 class="text-2xl font-semibold text-gray-700 dark:text-gray-200">
+                Detail PO
+            </h2>
+            
+            <button class="bg-green-600 hover:bg-green-800 duration-150 ease-in-out text-white font-bold py-2 px-4 rounded inline-flex justify-between items-center">
+                <i class="fa-solid fa-circle-plus mr-3"></i>    
+                <span>Tambah Data</span>
+            </button>
+        </div>
 
         <!-- Table -->
         <div class="w-full overflow-hidden rounded-lg shadow-xs mt-3 mb-5">
@@ -82,7 +89,7 @@
                                 showConfirmButton: false,
                                 timer: 3000
                             }).then(function () {
-                                location.reload();
+                                window.location.href = "/";
                             });
                         } else {
                             Swal.fire({

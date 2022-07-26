@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [BDHarianController::class, 'index']);
 
 Route::resource('bd-harian', BDHarianController::class);
-Route::put('bd-harian/delete/{bd_harian}', [BDHarianController::class, 'deleteData'])->name('bd-harian.delete');
+Route::post('bd-harian/delete/{id}', [BDHarianController::class, 'deleteData'])->name('bd-harian.delete');
 Route::get('bd-harian-detail/{bd_harian}', [BDHarianController::class, 'detail'])->name('bd-harian-detail.index');
 Route::post('bd-harian-dok', [BDHarianController::class, 'storeBdDok'])->name('bd-harian-dok.store');
 Route::post('bd-harian-desc', [BDHarianController::class, 'storeBdDesc'])->name('bd-harian-desc.store');

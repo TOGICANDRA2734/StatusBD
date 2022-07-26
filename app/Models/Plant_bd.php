@@ -20,6 +20,7 @@ class Plant_bd extends Model
         'kodesite',
         'keterangan',
         'status_bd',
+        'del',
     ];
     public $timestamps =false;
 }
