@@ -24,14 +24,11 @@ class POController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create_data($id)
+    public function create()
     {
-        // Data Utama
-        $data_po = PO::where('del', '<>', '0')->get();
-        dd($data_po);
+        $id_tiket_po = Plant_bd_dok::select('id')->where('del', 1)->get();
 
-
-        return view('po.create', compact(''));
+        return view('po-harian.create', compact('id_tiket_po'));
     }
 
     /**
@@ -43,34 +40,27 @@ class POController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nom_unit' => 'required',
-            'tgl_bd' => 'required',
-            'tgl_rfu' => 'required',
-            'ket_tgl_rfu' => 'required',
-            'kode_bd' => 'required',
-            'pic' => 'required',
-            'hm' => 'required',
-            'site' => 'required',
+            'id_tiket_po' => 'required',
+            'dok_po' => 'required',
+            'no_po' => 'required',
+            'tgl_po' => 'required',
+            'dealer_po' => 'required',
         ]);
 
-        $record = Plant_bd::create([
-            'nom_unit'          =>  $request->nom_unit,
-            'tgl_bd'            =>  $request->tgl_bd,
-            'tgl_rfu'           =>  $request->tgl_rfu,
-            'ket_tgl_rfu'       =>  $request->ket_tgl_rfu,
-            'kode_bd'           =>  $request->kode_bd,
-            'pic'               =>  $request->pic,
-            'hm'                =>  $request->hm,
-            'kodesite'          =>  $request->site,
-            'keterangan'        =>  "Testing",
-            'status_bd'         =>  $request->kode_bd[1],
+        $record = PO::create([
+            'id_tiket_po'   =>  $request->id_tiket_po,
+            'no_po'   =>  $request->no_po,
+            'dok_po'        =>  $request->dok_po,
+            'tgl_po'        =>  $request->tgl_po,
+            'dealer_po'     =>  $request->dealer_po,
+            'del'           =>  1,
         ]);
 
         if($record){
-            return redirect()->route('bd-harian.index');
+            return redirect()->route('po-harian.show', $request->id_tiket_po)->with(['success' => 'Data Berhasil Ditambah!']);
         }
         else{
-            return redirect()->route('bd-harian.index');
+            return redirect()->route('po-harian.show', $request->id_tiket_po)->with(['error' => 'Data Gagal Ditambah!']);
         }
     }
 
@@ -83,8 +73,18 @@ class POController extends Controller
     public function show($id)
     {
         $data = PO::where('id_tiket_po', $id)->get();
+        $dataDok = Plant_bd_dok::select('id_tiket','dok_no')->where('id', $data[0]->id_tiket_po)->get();
+        $dataBD = Plant_bd::select('kodesite')->where('id', $dataDok[0]->id_tiket)->get();
 
-        return view('po.show', compact('data', 'id'));
+        // dd($dataDok->id_tiket);
+
+        // Data Dokumen 
+        // dd(Plant_bd_dok::select('dok_no')->where('id', $data[0]->id_tiket_po)->get());
+        
+        // Data Site 
+        // dd(Plant_bd::select('kodesite')->where('id', $dataDok[0]->id_tiket)->get());
+        
+        return view('po-harian.show', compact('data', 'dataDok', 'dataBD'));
     }
 
     /**
@@ -105,7 +105,6 @@ class POController extends Controller
 
 
         return view('bd-harian.edit', compact('nom_unit', 'kode_bd', 'dok_type', 'dok_tiket', 'site', 'data'));
-        
     }
 
     /**

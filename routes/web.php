@@ -3,6 +3,7 @@
 use App\Http\Controllers\BDDokController;
 use App\Http\Controllers\BDHarianController;
 use App\Http\Controllers\POController;
+use App\Http\Controllers\POTransaksiController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,4 +27,6 @@ Route::resource('bd-harian-dok', BDDokController::class);
 
 // PO
 Route::resource('po-harian', POController::class);
-Route::get('po-harian/create_data/{$id}', [POController::class, 'create_data'])->name('po-harian.create_data');
+
+// PO Transaksi 
+Route::resource('po-transaksi-harian', POTransaksiController::class);

@@ -5,16 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class PO extends Model
+class plant_status_db_po_transaksi extends Model
 {
     use HasFactory;
-    protected $table='plant_status_db_po';
+    protected $table='plant_status_db_po_transaksi';
     protected $fillable= [
-        'id_tiket_po',
-        'dok_po',
         'no_po',
-        'tgl_po',
-        'dealer_po',
+        'id_tiket_po',
+        'no_po',
+        'po_date',
+        'supplier',
+        'item',
+        'no_mrs',
+        'mrs_date',
         'del',
     ];
     public $timestamps =false;

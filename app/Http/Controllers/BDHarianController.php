@@ -146,7 +146,6 @@ class BDHarianController extends Controller
         $dok_tiket = DB::table("plant_status_bd_dok")->select(DB::raw("DISTINCT id_tiket"))->get();
         $site = DB::table('site')->select('kodesite', 'namasite', 'lokasi')->get();
 
-
         return view('bd-harian.edit', compact('nom_unit', 'kode_bd', 'dok_type', 'dok_tiket', 'site', 'data'));
     }
 

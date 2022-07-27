@@ -21,9 +21,11 @@
                     <thead class="bg-stone-800 sticky top-0">
                         <tr class="text-xs font-semibold tracking-wide text-center text-white uppercase dark:border-gray-700 dark:text-gray-400 dark:bg-gray-800">
                             <th  class="px-2 py-1 md:px-4 md:py-3 border-b border-r border-stone w-5">No</th>
-                            <th  class="px-2 py-1 md:px-4 md:py-3 border-b border-r border-stone">PO</th>
-                            <th  class="px-2 py-1 md:px-4 md:py-3 border-b border-r border-stone">Tanggal PO</th>
-                            <th  class="px-2 py-1 md:px-4 md:py-3 border-b border-r border-stone">Dealer PO</th>
+                            <th  class="px-2 py-1 md:px-4 md:py-3 border-b border-r border-stone">RS/SR Site</th>
+                            <th  class="px-2 py-1 md:px-4 md:py-3 border-b border-r border-stone">Nomor PO</th>
+                            <th  class="px-2 py-1 md:px-4 md:py-3 border-b border-r border-stone w-[5rem]">Site</th>
+                            <th  class="px-2 py-1 md:px-4 md:py-3 border-b border-r border-stone">Deskripsi</th>
+                            <th  class="px-2 py-1 md:px-4 md:py-3 border-b border-r border-stone">Deskripsi</th>
                             <th  class="px-2 py-1 md:px-4 md:py-3 border-b border-r border-stone w-[12rem]">Aksi</th>
                         </tr>
                     </thead>
@@ -37,10 +39,14 @@
                             @foreach($data as $key => $dt)
                                 <tr class="group data-row text-center text-gray-700 dark:text-gray-400 hover:bg-gray-400 hover:text-white ease-in-out duration-150" onclick="changeColor(this)">
                                     <td class="px-4 py-3 text-sm group-hover:bg-gray-400 group-hover:text-white">{{$key+1}}</td>
-                                    <td class="px-4 py-3 text-sm group-hover:bg-gray-400 group-hover:text-white">{{$dt->PO}}</td>
-                                    <td class="px-4 py-3 text-sm group-hover:bg-gray-400 group-hover:text-white">{{$dt->tgl_po}}</td>
-                                    <td class="px-4 py-3 text-sm group-hover:bg-gray-400 group-hover:text-white">{{$dt->dealer_po}}</td>
+                                    <td class="px-4 py-3 text-sm group-hover:bg-gray-400 group-hover:text-white">{{$dt->no_po}}</td>
+                                    <td class="px-4 py-3 text-sm group-hover:bg-gray-400 group-hover:text-white">{{$dataDok[0]->dok_no}}</td>
+                                    <td class="px-4 py-3 text-sm group-hover:bg-gray-400 group-hover:text-white">{{$dataBD[0]->kodesite}}</td>
+                                    <td class="px-4 py-3 text-sm group-hover:bg-gray-400 group-hover:text-white">{{$dt->dok_po}}</td>
                                     <td class="px-4 py-3 text-sm group-hover:bg-gray-400 group-hover:text-white text-center">
+                                        <a href="#" class="tbDetail cursor-pointer mr-1 px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-stone-800 border border-transparent rounded-md active:bg-stone-800 hover:bg-stone-900 focus:outline-none focus:shadow-outline-purple">
+                                            ...
+                                        </a>
                                         <a href="" class="tbDetail mr-1 px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-amber-400 border border-transparent rounded-md active:bg-amber-800 hover:bg-amber-900 focus:outline-none focus:shadow-outline-purple">
                                             <i class="fa-solid fa-pencil"></i>
                                         </a>
