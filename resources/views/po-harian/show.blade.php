@@ -49,7 +49,7 @@
                                         <a href="{{route('po-harian.edit', $dt->id)}}" class="tbDetail mr-1 px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-amber-400 border border-transparent rounded-md active:bg-amber-800 hover:bg-amber-900 focus:outline-none focus:shadow-outline-purple">
                                             <i class="fa-solid fa-pencil"></i>
                                         </a>
-                                        <button onclick="destroy(this.id)" id="{{$dt->id}}" class="tbDetail mr-1 px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-red-600 border border-transparent rounded-md active:bg-red-800 hover:bg-red-900 focus:outline-none focus:shadow-outline-purple">
+                                        <button onclick="deleteConfirmation(this.id)" id="{{$dt->id}}" class="tbDetail mr-1 px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-red-600 border border-transparent rounded-md active:bg-red-800 hover:bg-red-900 focus:outline-none focus:shadow-outline-purple">
                                             <i class="fa-solid fa-trash"></i>
                                         </button>
                                     </td>
@@ -67,55 +67,45 @@
 </main>
 
 <script>
-    function destroy(id){
-        var id=id;
-        var token=$("meta[name='csrf-token']").attr("content");
-        console.log(id);
-        
-        Swal.fire({
-            title: "Apakah kamu yakin?",
-            text: "INGIN MENGHAPUS DATA INI!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            cancelButtonText: 'BATAL',
-            confirmButtonText: 'YA, HAPUS!',
-        }).then((result) => {
-            if (result.isConfirmed) {
-                //ajax delete
-                jQuery.ajax({
-                    url: `/po-harian/delete/${id}`,
-                    data: {
-                        "id": id,
-                        "_token": token
-                    },
-                    type: 'PUT',
-                    success: function (response) {
-                        if (response.status == "success") {
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'BERHASIL!',
-                                text: 'DATA BERHASIL DIHAPUS!',
-                                showConfirmButton: false,
-                                timer: 3000
-                            }).then(function () {
-                                window.location.href = "/";
-                            });
+    function deleteConfirmation(id) {
+        swal.fire({
+            title: "Apakah anda yakin untuk menghapus data?",
+            icon:  'question',
+            text:  "Data akan dihapus beserta Data Detail yang ada di dalamnya",
+            type:  "warning",
+            showCancelButton: !0,
+            confirmButtonText: "Ya",
+            cancelButtonText: "Tidak",
+            reverseButtons: !0
+        }).then(function (e) {
+
+            if (e.value === true) {
+                let token = $('meta[name="csrf-token"]').attr('content');
+                let _url = `/po-harian/delete/${id}`;
+
+                $.ajax({
+                    type: 'POST',
+                    url: _url,
+                    data: {_token: token},
+                    success: function (resp) {
+                        if (resp.success) {
+                            swal.fire("Data Berhasil dihapus!", resp.message, "success");
+                            location.replace(window.location.origin + "/");
                         } else {
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'GAGAL!',
-                                text: 'DATA GAGAL DIHAPUS!',
-                                showConfirmButton: false,
-                                timer: 3000
-                            }).then(function () {
-                                location.reload();
-                            });
+                            swal.fire("Error!", 'Ada kesalahan dalam menghapus data', "error");
                         }
+                    },
+                    error: function (resp) {
+                        swal.fire("Error!", 'Ada kesalahan dalam menghapus data Not', "error");
                     }
                 });
+
+            } else {
+                e.dismiss;
             }
+
+        }, function (dismiss) {
+            return false;
         })
     }
 </script>

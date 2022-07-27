@@ -27,6 +27,8 @@ Route::resource('bd-harian-dok', BDDokController::class);
 
 // PO
 Route::resource('po-harian', POController::class);
+Route::post('po-harian/delete/{id}', [POController::class, 'deleteData'])->name('po-harian.delete');
+
 
 // PO Transaksi 
 Route::resource('po-transaksi-harian', POTransaksiController::class);
