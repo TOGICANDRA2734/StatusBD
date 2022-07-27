@@ -46,7 +46,7 @@
                                         <a href="{{route('po-transaksi-harian.show', $dt->id)}}" class="tbDetail cursor-pointer mr-1 px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-stone-800 border border-transparent rounded-md active:bg-stone-800 hover:bg-stone-900 focus:outline-none focus:shadow-outline-purple">
                                             ...
                                         </a>
-                                        <a href="#" class="tbDetail mr-1 px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-amber-400 border border-transparent rounded-md active:bg-amber-800 hover:bg-amber-900 focus:outline-none focus:shadow-outline-purple">
+                                        <a href="{{route('po-harian.edit', $dt->id)}}" class="tbDetail mr-1 px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-amber-400 border border-transparent rounded-md active:bg-amber-800 hover:bg-amber-900 focus:outline-none focus:shadow-outline-purple">
                                             <i class="fa-solid fa-pencil"></i>
                                         </a>
                                         <button onclick="destroy(this.id)" id="{{$dt->id}}" class="tbDetail mr-1 px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-red-600 border border-transparent rounded-md active:bg-red-800 hover:bg-red-900 focus:outline-none focus:shadow-outline-purple">
@@ -85,7 +85,7 @@
             if (result.isConfirmed) {
                 //ajax delete
                 jQuery.ajax({
-                    url: `/bd-harian/delete/${id}`,
+                    url: `/po-harian/delete/${id}`,
                     data: {
                         "id": id,
                         "_token": token
