@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\plant_status_db_po_transaksi;
+use App\Models\PO;
 use Illuminate\Http\Request;
+
+use function PHPUnit\Framework\isNull;
 
 class POTransaksiController extends Controller
 {
@@ -24,7 +27,9 @@ class POTransaksiController extends Controller
      */
     public function create()
     {
-        //
+        $id_tiket_po = PO::select('id', 'no_po')->where('del', 1)->get();
+
+        return view('po-transaksi-harian.create', compact('id_tiket_po'));
     }
 
     /**
@@ -35,7 +40,33 @@ class POTransaksiController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'id_tiket_po' => 'required',
+            'no_po' => 'required',
+            'po_date' => 'required',
+            'supplier' => 'required',
+            'item' => 'required',
+            'no_mrs' => 'required',
+            'mrs_date' => 'required',
+        ]);
+
+        $record = PO::create([
+            'id_tiket_po'       =>  $request->id_tiket_po,
+            'no_po'             =>  $request->no_po,
+            'po_date'           =>  $request->po_date,
+            'supplier'          =>  $request->supplier,
+            'item'              =>  $request->item,
+            'no_mrs'            =>  $request->no_mrs,
+            'mrs_date'          =>  $request->mrs_date,
+            'del'               =>  1
+        ]);
+
+        if($record){
+            return redirect()->route('po-harian.show', $request->id_tiket_po)->with(['success' => 'Data Berhasil Ditambah!']);
+        }
+        else{
+            return redirect()->route('po-harian.show', $request->id_tiket_po)->with(['error' => 'Data Gagal Ditambah!']);
+        }
     }
 
     /**
@@ -48,7 +79,9 @@ class POTransaksiController extends Controller
     {
         $data = plant_status_db_po_transaksi::where('id_tiket_po', $id)->get();
         
-        return view('po-harian.show', compact('data', 'dataDok', 'dataBD'));
+        // dd($data[0]->no_mrs == "", $data[0]->no_mrs, $data[1]->no_mrs == "", $data[1]->no_mrs);
+
+        return view('po-transaksi-harian.show', compact('data'));
     }
 
     /**

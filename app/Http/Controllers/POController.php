@@ -76,14 +76,6 @@ class POController extends Controller
         $dataDok = Plant_bd_dok::select('id_tiket','dok_no')->where('id', $data[0]->id_tiket_po)->get();
         $dataBD = Plant_bd::select('kodesite')->where('id', $dataDok[0]->id_tiket)->get();
 
-        // dd($dataDok->id_tiket);
-
-        // Data Dokumen 
-        // dd(Plant_bd_dok::select('dok_no')->where('id', $data[0]->id_tiket_po)->get());
-        
-        // Data Site 
-        // dd(Plant_bd::select('kodesite')->where('id', $dataDok[0]->id_tiket)->get());
-        
         return view('po-harian.show', compact('data', 'dataDok', 'dataBD'));
     }
 
@@ -102,7 +94,6 @@ class POController extends Controller
         $dok_type = DB::table("plant_status_bd_dok")->select(DB::raw("DISTINCT dok_type"))->get();
         $dok_tiket = DB::table("plant_status_bd_dok")->select(DB::raw("DISTINCT id_tiket"))->get();
         $site = DB::table('site')->select('kodesite', 'namasite', 'lokasi')->get();
-
 
         return view('bd-harian.edit', compact('nom_unit', 'kode_bd', 'dok_type', 'dok_tiket', 'site', 'data'));
     }
