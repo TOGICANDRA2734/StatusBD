@@ -32,3 +32,4 @@ Route::post('po-harian/delete/{id}', [POController::class, 'deleteData'])->name(
 
 // PO Transaksi 
 Route::resource('po-transaksi-harian', POTransaksiController::class);
+Route::post('po-transaksi-harian/delete/{id}', [POTransaksiController::class, 'deleteData'])->name('po-transaksi-harian.delete');

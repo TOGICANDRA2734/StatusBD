@@ -12,7 +12,6 @@ class plant_status_db_po_transaksi extends Model
     protected $fillable= [
         'no_po',
         'id_tiket_po',
-        'no_po',
         'po_date',
         'supplier',
         'item',

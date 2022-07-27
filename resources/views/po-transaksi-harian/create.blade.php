@@ -18,7 +18,7 @@
                 @csrf
                 <label class="block mt-4 text-sm">
                     <span class="font-semibold text-gray-700 dark:text-gray-400">Tiket (Id Tiket | No PO)</span>
-                    <select class="block shadow-sm border p-2 rounded-md w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-multiselect focus:border-stone-400 focus:outline-none focus:shadow-outline-stone dark:focus:shadow-outline-gray" name="id_tiket" id="id_tiket">
+                    <select class="block shadow-sm border p-2 rounded-md w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-multiselect focus:border-stone-400 focus:outline-none focus:shadow-outline-stone dark:focus:shadow-outline-gray" name="id_tiket_po" id="id_tiket_po">
                         @foreach($id_tiket_po as $it)
                             <option value="{{$it->id}}">{{$it->id}} - {{$it->no_po}}</option>
                         @endforeach
