@@ -140,7 +140,7 @@ class BDHarianController extends Controller
     {
         // Data Utama
         $data = Plant_bd::findOrFail($id);
-        $nom_unit = DB::table("plant_populasi")->select("Nom_unit")->get();
+        $nom_unit = DB::table("plant_populasi")->select("Nom_unit")->where('Nom_unit', '=', $data->nom_unit)->get();
         $kode_bd = DB::table("kode_bd")->select("kode_bd")->get();
         $dok_type = DB::table("plant_status_bd_dok")->select(DB::raw("DISTINCT dok_type"))->get();
         $dok_tiket = DB::table("plant_status_bd_dok")->select(DB::raw("DISTINCT id_tiket"))->get();
