@@ -21,7 +21,7 @@
                             <th rowspan="2" class="px-2 py-1 md:px-4 md:py-3 border-b border-r border-stone">Keterangan RFU</th>
                             <th rowspan="2" class="px-2 py-1 md:px-4 md:py-3 border-b border-r border-stone">PIC</th>
                             <th rowspan="2" class="px-2 py-1 md:px-4 md:py-3 border-b border-r border-stone">Site</th>
-                            <th rowspan="2" class="px-2 py-1 md:px-4 md:py-3 border-b border-r border-stone  w-[8rem]">Aksi</th>
+                            <th rowspan="2" class="px-2 py-1 md:px-4 md:py-3 border-b border-r border-stone w-[8rem]">Aksi</th>
                         </tr>
                         <tr class="text-xs font-semibold tracking-wide text-center text-white uppercase dark:border-gray-700 dark:text-gray-400 dark:bg-gray-800">
                             <th class="px-2 py-1 md:px-4 md:py-3 border-b border-r border-stone">Start</th>
@@ -36,7 +36,7 @@
                                 <td class="px-4 py-3 text-sm group-hover:bg-gray-400 group-hover:text-white">{{$dt->id}}</td>
                                 <td class="px-4 py-3 text-sm group-hover:bg-gray-400 group-hover:text-white">{{$dt->nom_unit}}</td>
                                 <td class="px-4 py-3 text-sm group-hover:bg-gray-400 group-hover:text-white">{{$dt->hm}}</td>
-                                <td class="px-4 py-3 text-sm group-hover:bg-gray-400 group-hover:text-white">{{$dt->status_bd}}</td>
+                                <td class="px-4 py-3 text-sm group-hover:bg-gray-400 group-hover:text-white">{{$dt->kode_bd}}</td>
                                 <td class="px-4 py-3 text-sm group-hover:bg-gray-400 group-hover:text-white">{{date('d-m-Y', strtotime($dt->tgl_bd))}}</td>
                                 <td class="px-4 py-3 text-sm group-hover:bg-gray-400 group-hover:text-white">{{date('d-m-Y', strtotime($dt->tgl_rfu))}}</td>
                                 <td class="px-4 py-3 text-sm group-hover:bg-gray-400 group-hover:text-white">{{$dt->day}}</td>
@@ -47,17 +47,11 @@
                                     <a href="{{route('bd-harian.edit', $dt->id)}}" class="tbDetail mr-1 px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-amber-400 border border-transparent rounded-md active:bg-amber-800 hover:bg-amber-900 focus:outline-none focus:shadow-outline-purple">
                                         <i class="fa-solid fa-pencil"></i>
                                     </a>
-                                    <a onclick="deleteConfirmation({{$dt->id}})" class="tbDetail mr-1 px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-red-600 border border-transparent rounded-md active:bg-red-800 hover:bg-red-900 focus:outline-none focus:shadow-outline-purple">
-                                        <i class="fa-solid fa-trash"></i>
-                                    </a>
                                 </td>
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
-            </div>
-            <div class="px-2 py-1 md:px-4 md:py-3 text-xs tracking-wide text-white uppercase border bg-stone-800">
-                
             </div>
         </div>
 
@@ -77,8 +71,9 @@
                     <thead class="bg-stone-800 sticky top-0">
                         <tr class="text-xs font-semibold tracking-wide text-center text-white uppercase dark:border-gray-700 dark:text-gray-400 dark:bg-gray-800">
                             <th rowspan="2" class="px-2 py-1 md:px-4 md:py-3 border-b border-r border-stone w-5">No</th>
+                            <th rowspan="2" class="px-2 py-1 md:px-4 md:py-3 border-b border-r border-stone">Detail Kerusakan</th>
                             <th colspan="3" class="px-2 py-1 md:px-4 md:py-3 border-b border-r border-stone">RS/SR/PP</th>
-                            <th rowspan="2" class="px-2 py-1 md:px-4 md:py-3 border-b border-r border-stone">Uraian Breakdown</th>
+                            <th rowspan="2" class="px-2 py-1 md:px-4 md:py-3 border-b border-r border-stone">Status BD</th>
                             <th rowspan="2" class="px-2 py-1 md:px-4 md:py-3 border-b border-r border-stone">Uraian</th>
                             <th rowspan="2" class="px-2 py-1 md:px-4 md:py-3 border-b border-r border-stone">Keterangan</th>
                             <th rowspan="2" class="px-2 py-1 md:px-4 md:py-3 border-b border-r border-stone w-[12rem]">Aksi</th>
@@ -99,42 +94,21 @@
                             @foreach($dataDok as $key => $dt)
                                 <tr class="group data-row text-center text-gray-700 dark:text-gray-400 hover:bg-gray-400 hover:text-white ease-in-out duration-150" onclick="changeColor(this)">
                                     <td class="px-4 py-3 text-sm group-hover:bg-gray-400 group-hover:text-white">{{$key+1}}</td>
-                                    @foreach($dt as $key => $d)
-                                        @if($key != 'nom_unit')
-                                            @if($key != 'id')
-                                                @if(false === strtotime($d))
-                                                    <td class="px-4 py-3 border group-hover:bg-gray-400 group-hover:text-white">
-                                                        @if(is_double($d))
-                                                            {{number_format($d, 0, ',', '.')}}
-                                                        @else
-                                                            {{$d}}
-                                                        @endif    
-                                                    </td>
-                                                @else
-                                                    @if ($key == 'uraian' or $key == 'keterangan' or $key == 'uraian_bd')
-                                                        <td class="px-4 py-3 border group-hover:bg-gray-400 group-hover:text-white">
-                                                            {{$d}} 
-                                                        </td>
-                                                    @else
-                                                        <td class="px-4 py-3 border group-hover:bg-gray-400 group-hover:text-white">
-                                                            <!-- Tanggal  -->
-                                                            {{date_format(new DateTime($d), "d/m/Y")}}
-                                                        </td>
-                                                    @endif
-                                                @endif
-                                            @endif    
-                                        @endif    
-                                    @endforeach
-                                    
-
-                                    <td class="px-4 py-3 text-sm group-hover:bg-gray-400 group-hover:text-white text-center">
-                                        <a href="{{route('po-harian.show', $dt->id)}}" class="tbDetail cursor-pointer mr-1 px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-stone-800 border border-transparent rounded-md active:bg-stone-800 hover:bg-stone-900 focus:outline-none focus:shadow-outline-purple">
+                                    <td class="px-4 py-3 text-sm group-hover:bg-gray-400 group-hover:text-white">{{$dt->uraian_bd}}</td>
+                                    <td class="px-4 py-3 text-sm group-hover:bg-gray-400 group-hover:text-white">{{$dt->dok_type}}</td>
+                                    <td class="px-4 py-3 text-sm group-hover:bg-gray-400 group-hover:text-white">{{$dt->dok_no}}</td>
+                                    <td class="px-4 py-3 text-sm group-hover:bg-gray-400 group-hover:text-white">{{$dt->dok_tgl}}</td>
+                                    <td class="px-4 py-3 text-sm group-hover:bg-gray-400 group-hover:text-white">{{$dt->kode_bd}}</td>
+                                    <td class="px-4 py-3 text-sm group-hover:bg-gray-400 group-hover:text-white">{{$dt->uraian}}</td>
+                                    <td class="px-4 py-3 text-sm group-hover:bg-gray-400 group-hover:text-white">{{$dt->keterangan}}</td>
+                                    <td class="px-4 py-3 text-sm group-hover:bg-gray-400 group-hover:text-white text-center flex flex-col sm:flex-row justify-center items-center">
+                                        <a href="{{route('po-harian.show', $dt->id)}}" class="tbDetail cursor-pointer mt-1 sm:mt-0 sm:mr-1 px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-stone-800 border border-transparent rounded-md active:bg-stone-800 hover:bg-stone-900 focus:outline-none focus:shadow-outline-purple">
                                             ...
                                         </a>
-                                        <a href="{{route('bd-harian-dok.edit', $dt->id)}}" class="tbDetail mr-1 px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-amber-400 border border-transparent rounded-md active:bg-amber-800 hover:bg-amber-900 focus:outline-none focus:shadow-outline-purple">
+                                        <a href="{{route('bd-harian-dok.edit', $dt->id)}}" class="tbDetail cursor-pointer mt-1 sm:mt-0 sm:mr-1 px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-amber-400 border border-transparent rounded-md active:bg-amber-800 hover:bg-amber-900 focus:outline-none focus:shadow-outline-purple">
                                             <i class="fa-solid fa-pencil"></i>
                                         </a>
-                                        <a onclick="deleteConfirmationDetail({{$dt->id}})" class="tbDetail mr-1 px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-red-600 border border-transparent rounded-md active:bg-red-800 hover:bg-red-900 focus:outline-none focus:shadow-outline-purple">
+                                        <a onclick="deleteConfirmationDetail({{$dt->id}})" class="tbDetail cursor-pointer mt-1 sm:mt-0 sm:mr-1 px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-red-600 border border-transparent rounded-md active:bg-red-800 hover:bg-red-900 focus:outline-none focus:shadow-outline-purple">
                                             <i class="fa-solid fa-trash"></i>
                                         </a>
                                     </td>
@@ -176,11 +150,11 @@
                             swal.fire("Data Berhasil dihapus!", resp.message, "success");
                             location.replace(window.location.origin + "/");
                         } else {
-                            swal.fire("Error!", 'Ada kesalahan dalam menghapus data Testing', "error");
+                            swal.fire("Error!", 'Ada kesalahan dalam menghapus data', "error");
                         }
                     },
                     error: function (resp) {
-                        swal.fire("Error!", 'Ada kesalahan dalam menghapus data Not Testing', "error");
+                        swal.fire("Error!", 'Ada kesalahan dalam menghapus data Not', "error");
                     }
                 });
 

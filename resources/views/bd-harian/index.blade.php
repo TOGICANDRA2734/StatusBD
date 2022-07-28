@@ -75,10 +75,10 @@
         <div class="w-full overflow-hidden rounded-lg shadow-xs mt-2 mb-5">
             <div class="w-full overflow-x-auto max-h-96 md:max-h-[38rem]">
                 <table class="w-full whitespace-no-wrap border">
-                    <thead class="bg-stone-800 sticky top-0">
+                    <thead class="bg-stone-800 sticky top-0 z-50">
                         <tr class="text-xs font-semibold tracking-wide text-center text-white uppercase dark:border-gray-700 dark:text-gray-400 dark:bg-gray-800">
                             <th rowspan="2" class="px-2 py-1 md:px-4 md:py-3 border-b border-r border-stone">No</th>
-                            <th rowspan="2" class="px-2 py-1 md:px-4 md:py-3 border-b border-r border-stone">Nom Unit</th>
+                            <th rowspan="2" class="px-2 py-1 md:px-4 md:py-3 border-b border-r border-stone bg-stone-800 left-0 sticky">Nom Unit</th>
                             <th rowspan="2" class="px-2 py-1 md:px-4 md:py-3 border-b border-r border-stone">HM/KM</th>
                             <th rowspan="2" class="px-2 py-1 md:px-4 md:py-3 border-b border-r border-stone">Status BD</th>
                             <th colspan="3" class="px-2 py-1 md:px-4 md:py-3 border-b border-r border-stone">Tanggal</th>
@@ -98,7 +98,7 @@
                         @foreach($data as $dt)
                             <tr class="group data-row text-center text-gray-700 dark:text-gray-400 hover:bg-gray-400 hover:text-white ease-in-out duration-150" onclick="changeColor(this)">
                                 <td class="px-4 py-3 text-sm group-hover:bg-gray-400 group-hover:text-white">{{$dt->id}}</td>
-                                <td class="px-4 py-3 text-sm group-hover:bg-gray-400 group-hover:text-white">{{$dt->nom_unit}}</td>
+                                <td class="px-4 py-3 text-sm group-hover:bg-gray-400 group-hover:text-white font-bold bg-stone-300 z-10 left-0 sticky">{{$dt->nom_unit}}</td>
                                 <td class="px-4 py-3 text-sm group-hover:bg-gray-400 group-hover:text-white">{{$dt->hm}}</td>
                                 <td class="px-4 py-3 text-sm group-hover:bg-gray-400 group-hover:text-white">{{$dt->kode_bd}}</td>
                                 <td class="px-4 py-3 text-sm group-hover:bg-gray-400 group-hover:text-white">{{date('d-m-Y', strtotime($dt->tgl_bd))}}</td>

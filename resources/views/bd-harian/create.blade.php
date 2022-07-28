@@ -63,7 +63,7 @@
                 <span class="font-semibold text-gray-700 dark:text-gray-400">
                     HM
                 </span>
-                <input class="block shadow-sm border p-2 rounded-md w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-multiselect focus:border-stone-400 focus:outline-none focus:shadow-outline-stone dark:focus:shadow-outline-gray" type="text" name="hm" id="hm">
+                <input class="block shadow-sm border p-2 rounded-md w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-multiselect focus:border-stone-400 focus:outline-none focus:shadow-outline-stone dark:focus:shadow-outline-gray" type="number" name="hm" id="hm">
             </label>
 
             <label class="block mt-4 text-sm">
@@ -100,12 +100,12 @@
                 id="storeDok"
                 class="px-4 py-3 mb-8 grid grid-cols-2 gap-5 bg-white rounded-lg shadow-md dark:bg-gray-800"
             >
-                @csrf
+            @csrf
                 <label class="block mt-4 text-sm">
-                    <span class="font-semibold text-gray-700 dark:text-gray-400">Tiket</span>
+                    <span class="font-semibold text-gray-700 dark:text-gray-400">Unit</span>
                     <select class="block shadow-sm border p-2 rounded-md w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-multiselect focus:border-stone-400 focus:outline-none focus:shadow-outline-stone dark:focus:shadow-outline-gray" name="id_tiket" id="id_tiket">
                         @foreach($dok_tiket as $it)
-                            <option value="{{$it->id_tiket}}">{{$it->id_tiket}}</option>
+                            <option value="{{$it->id_tiket}}">{{$it->id_tiket}} - {{$it->Nom_unit}}</option>
                         @endforeach
                     </select>
                 </label>

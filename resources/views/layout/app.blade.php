@@ -33,7 +33,7 @@
     >
       <!-- Desktop sidebar -->
       <aside
-        class="z-20 hidden w-24 overflow-y-auto bg-white dark:bg-gray-800 md:block flex-shrink-0"
+        class="z-20 hidden w-24 overflow-hidden bg-white dark:bg-gray-800 md:block flex-shrink-0"
       >
         <div class="py-4 text-gray-500 dark:text-gray-400 flex flex-col justify-center items-center">
           <a
@@ -75,7 +75,7 @@
         
         @yield('content')
         
-        <footer class="z-10 py-2 bg-stone-800 shadow-md dark:bg-gray-800">
+        <footer class="block sm:hidden z-10 py-2 bg-stone-800 shadow-md dark:bg-gray-800">
           <div
             class="container flex items-center justify-center h-full px-6 mx-auto text-green-600 dark:text-green-300"
           >

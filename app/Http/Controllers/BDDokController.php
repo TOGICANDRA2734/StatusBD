@@ -31,6 +31,7 @@ class BDDokController extends Controller
         $dok_type = DB::table("plant_status_bd_dok")->select(DB::raw("DISTINCT dok_type"))->get();
         $dok_tiket = DB::table("plant_status_bd")->select('id', 'nom_unit')->where('del', '=', 1)->get();
 
+
         return view('bd-harian-dok.create', compact('nom_unit', 'kode_bd', 'dok_type', 'dok_tiket'));
     }
 

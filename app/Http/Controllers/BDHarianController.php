@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\DB;
 
 class BDHarianController extends Controller
 {
+    private $idTable;
+
     /**
      * Display a listing of the resource.
      *
@@ -41,7 +43,6 @@ class BDHarianController extends Controller
         $dok_tiket = DB::table("plant_status_bd_dok")->select(DB::raw("DISTINCT id_tiket"))->get();
         $site = DB::table('site')->select('kodesite', 'namasite', 'lokasi')->where('status', '=', 1)->get();
 
-
         return view('bd-harian.create', compact('nom_unit', 'kode_bd', 'dok_type', 'dok_tiket', 'site'));
     }
 
@@ -64,7 +65,7 @@ class BDHarianController extends Controller
         $nom_unit = DB::table('plant_status_bd')->select("nom_unit")->where('id', '=', $id)->get();
 
         $dataDok = DB::table('plant_status_bd')
-        ->select('plant_status_bd_dok.id', 'plant_status_bd.nom_unit', 'plant_status_bd_dok.dok_type', 'plant_status_bd_dok.dok_no', 'plant_status_bd_dok.dok_tgl', 'plant_status_bd_dok.uraian_bd', 'plant_status_bd_dok.uraian', 'plant_status_bd_dok.keterangan')
+        ->select('plant_status_bd_dok.id', 'plant_status_bd.nom_unit', 'plant_status_bd_dok.dok_type', 'plant_status_bd_dok.dok_no', 'plant_status_bd_dok.dok_tgl', 'plant_status_bd_dok.uraian_bd', 'plant_status_bd_dok.kode_bd', 'plant_status_bd_dok.uraian', 'plant_status_bd_dok.keterangan')
         ->join('plant_status_bd_dok', 'plant_status_bd.id', '=', 'plant_status_bd_dok.id_tiket')
         ->where('plant_status_bd.id', '=', $id)
         ->where('plant_status_bd_dok.del', '=', 1)
@@ -110,6 +111,8 @@ class BDHarianController extends Controller
             'keterangan'        =>  "Testing",
             'status_bd'         =>  $request->kode_bd[1],
         ]);
+
+        $this->idTable = Plant_bd::select('id')->where('nom_unit', $record->nom_unit)->get();
 
         if($record){
             return redirect()->route('bd-harian.index');
