@@ -35,11 +35,11 @@ class BDHarianController extends Controller
     public function create()
     {
         // Data Utama
-        $nom_unit = DB::table("plant_populasi")->select("Nom_unit")->get();
-        $kode_bd = DB::table("kode_bd")->select("kode_bd")->get();
+        $nom_unit = DB::table("plant_populasi")->select("Nom_unit")->whereRaw('nom_unit NOT IN (SELECT nom_unit FROM plant_status_bd)')->get();
+        $kode_bd = DB::table("kode_bd")->select("kode_bd", "deskripsi_bd")->where('kode_bd', '<>', 'NA')->get();
         $dok_type = DB::table("plant_status_bd_dok")->select(DB::raw("DISTINCT dok_type"))->get();
         $dok_tiket = DB::table("plant_status_bd_dok")->select(DB::raw("DISTINCT id_tiket"))->get();
-        $site = DB::table('site')->select('kodesite', 'namasite', 'lokasi')->get();
+        $site = DB::table('site')->select('kodesite', 'namasite', 'lokasi')->where('status', '=', 1)->get();
 
 
         return view('bd-harian.create', compact('nom_unit', 'kode_bd', 'dok_type', 'dok_tiket', 'site'));

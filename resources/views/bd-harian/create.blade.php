@@ -54,7 +54,7 @@
                     class="block shadow-sm border p-2 rounded-md w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-multiselect focus:border-stone-400 focus:outline-none focus:shadow-outline-stone dark:focus:shadow-outline-gray"
                 >
                     @foreach($kode_bd as $data)
-                        <option value="{{$data->kode_bd}}">{{$data->kode_bd}}</option>
+                        <option value="{{$data->kode_bd}}">{{$data->kode_bd}} - {{$data->deskripsi_bd}}</option>
                     @endforeach
                 </select>
             </label>
